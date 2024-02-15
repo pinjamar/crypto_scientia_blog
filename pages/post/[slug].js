@@ -12,7 +12,7 @@ import {
   Loader,
 } from '../../components';
 import { getPosts, getPostDetails } from '../../services';
-import { AdjacentPosts } from '../../sections';
+// import { AdjacentPosts } from '../../sections';
 
 const PostDetails = ({ post }) => {
   return (
@@ -22,7 +22,7 @@ const PostDetails = ({ post }) => {
           <div className="col-span-1 lg:col-span-8">
             <PostDetail post={post} />
             <Author author={post.author} />
-            <AdjacentPosts slug={post.slug} createdAt={post.createdAt} />
+            {/* <AdjacentPosts slug={post.slug} createdAt={post.createdAt} /> */}
             <CommentsForm slug={post.slug} />
             <Comments slug={post.slug} />
           </div>
