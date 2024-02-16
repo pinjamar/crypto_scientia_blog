@@ -67,7 +67,7 @@ const PostDetail = ({ post }) => {
           <img
             src={post.featuredImage.url}
             alt=""
-            className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+            className="object-top h-full w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
           />
         </div>
         <div className="px-4 lg:px-0">
@@ -75,8 +75,8 @@ const PostDetail = ({ post }) => {
             <div className="hidden md:flex items-center justify-center lg:mb-0 lg:w-auto mr-8 items-center">
               <img
                 alt={post.author.name}
-                height="30px"
-                width="30px"
+                height={30}
+                width={30}
                 className="align-middle rounded-full"
                 src={post.author.photo.url}
               />
