@@ -182,30 +182,30 @@ export const getSimilarPosts = async (categories, slug) => {
 //   return result.postsConnection.edges;
 // };
 
-// export const getFeaturedPosts = async () => {
-//   const query = gql`
-//     query GetCategoryPost() {
-//       posts(where: {featuredPost: true}) {
-//         author {
-//           name
-//           photo {
-//             url
-//           }
-//         }
-//         featuredImage {
-//           url
-//         }
-//         title
-//         slug
-//         createdAt
-//       }
-//     }
-//   `;
+export const getFeaturedPosts = async () => {
+  const query = gql`
+    query GetCategoryPost() {
+      posts(where: {featuredPost: true}) {
+        author {
+          name
+          photo {
+            url
+          }
+        }
+        featuredImage {
+          url
+        }
+        title
+        slug
+        createdAt
+      }
+    }
+  `;
 
-//   const result = await request(graphqlAPI, query);
+  const result = await request(graphqlAPI, query);
 
-//   return result.posts;
-// };
+  return result.posts;
+};
 
 export const submitComment = async (obj) => {
   const result = await fetch('/api/comments', {
