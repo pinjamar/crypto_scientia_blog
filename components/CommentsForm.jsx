@@ -11,15 +11,15 @@ const CommentsForm = ({ slug }) => {
     comment: null,
     storeData: false,
   });
-
+  // prettier-ignore
   useEffect(() => {
     setLocalStorage(window.localStorage);
     const initalFormData = {
       name: window.localStorage.getItem('name'),
       email: window.localStorage.getItem('email'),
       storeData:
-        window.localStorage.getItem('name') ||
-        window.localStorage.getItem('email'),
+        window.localStorage.getItem('name') 
+        || window.localStorage.getItem('email'),
     };
     setFormData(initalFormData);
   }, []);
