@@ -7,8 +7,8 @@ import {
   Categories,
   PostWidget,
   Author,
-  Comments,
-  CommentsForm,
+  // Comments,
+  // CommentsForm,
   Loader,
 } from '../../components';
 import { getPosts, getPostDetails } from '../../services';
@@ -26,8 +26,8 @@ const PostDetails = ({ post }) => {
           <div className="col-span-1 lg:col-span-8">
             <PostDetail post={post} />
             <Author author={post.author} />
-            <CommentsForm slug={post.slug} />
-            <Comments slug={post.slug} />
+            {/* <CommentsForm slug={post.slug} />
+            <Comments slug={post.slug} /> */}
           </div>
           <div className="col-span-1 lg:col-span-4">
             <div className="relative lg:sticky top-8">

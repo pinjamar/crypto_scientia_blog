@@ -68,8 +68,13 @@ const PostDetail = ({ post }) => {
         <div className="relative overflow-hidden shadow-md mb-6">
           <img
             src={post.featuredImage.url}
-            alt=""
-            className="object-center h-full w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
+            alt={post.title}
+            width={1200}
+            height={600}
+            // className="object-center h-full w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
+            className="rounded-md object-cover w-full max-h-[500px]"
+            // eslint-disable-next-line react/no-unknown-property
+            priority
           />
         </div>
         <div className="px-4 lg:px-0">
@@ -106,7 +111,7 @@ const PostDetail = ({ post }) => {
               </span>
             </div>
           </div>
-          <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
+          <h1 className="mb-8 text-3xl font-semibold ">{post.title}</h1>
           {post.content.raw.children.map((typeObj, index) => {
             // prettier-ignore
             const children = typeObj.children.map((item, itemindex) =>
