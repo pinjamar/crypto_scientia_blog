@@ -78,7 +78,7 @@ const PostDetail = ({ post }) => {
           />
         </div>
         <div className="px-4 lg:px-0">
-          <div className="flex items-center mb-8 w-full">
+          <div className="flex items-center mb-8 w-full justify-center">
             <div className="hidden md:flex items-center justify-center lg:mb-0 lg:w-auto mr-8">
               <img
                 alt={post.author.name}
@@ -111,7 +111,9 @@ const PostDetail = ({ post }) => {
               </span>
             </div>
           </div>
-          <h1 className="mb-8 text-3xl font-semibold ">{post.title}</h1>
+          <h1 className="mb-8 md:text-4xl font-bold flex justify-center">
+            {post.title}
+          </h1>
           {post.content.raw.children.map((typeObj, index) => {
             // prettier-ignore
             const children = typeObj.children.map((item, itemindex) =>
