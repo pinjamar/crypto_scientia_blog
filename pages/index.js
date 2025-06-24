@@ -32,5 +32,6 @@ export async function getStaticProps() {
   const posts = (await getPosts()) || [];
   return {
     props: { posts },
+    revalidate: 60, // Rebuilds the page at most once every 60 seconds
   };
 }
