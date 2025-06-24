@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { PostCard, Categories, PostWidget } from '../components';
-import { getPosts } from '../services';
+import { getPosts, getFeaturedPost } from '../services';
 import { FeaturedPosts } from '../sections';
 
 export default function Home({ posts }) {
@@ -28,10 +28,35 @@ export default function Home({ posts }) {
   );
 }
 
+// export async function getStaticProps() {
+//   const posts = (await getPosts()) || [];
+//   return {
+//     props: { posts },
+//     // revalidate: 60, // Rebuilds the page at most once every 60 seconds
+//   };
+// }
+
 export async function getStaticProps() {
-  const posts = (await getPosts()) || [];
+  const posts = await getPosts();
+  const featuredPost = await getFeaturedPost(); // NEW and now working 🎯
+
   return {
-    props: { posts },
+    props: {
+      posts,
+      featuredPost,
+    },
     revalidate: 60, // Rebuilds the page at most once every 60 seconds
   };
 }
+
+// export async function getServerSideProps() {
+//   const posts = await getPosts();
+//   const featuredPost = await getFeaturedPost(); // NEW and now working 🎯
+
+//   return {
+//     props: {
+//       posts,
+//       featuredPost,
+//     },
+//   };
+// }

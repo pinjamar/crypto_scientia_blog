@@ -172,6 +172,11 @@ export const getFeaturedPosts = async () => {
   return result.posts;
 };
 
+export const getFeaturedPost = async () => {
+  const featuredPosts = await getFeaturedPosts();
+  return featuredPosts?.slice(0, 3) || [];
+};
+
 export const getRecentPosts = async () => {
   const query = gql`
     query GetPostDetails() {
