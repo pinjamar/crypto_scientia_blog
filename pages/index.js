@@ -28,17 +28,9 @@ export default function Home({ posts }) {
   );
 }
 
-// export async function getStaticProps() {
-//   const posts = (await getPosts()) || [];
-//   return {
-//     props: { posts },
-//     // revalidate: 60, // Rebuilds the page at most once every 60 seconds
-//   };
-// }
-
 export async function getStaticProps() {
   const posts = await getPosts();
-  const featuredPost = await getFeaturedPost(); // NEW and now working 🎯
+  const featuredPost = await getFeaturedPost();
 
   return {
     props: {
@@ -48,15 +40,3 @@ export async function getStaticProps() {
     revalidate: 60, // Rebuilds the page at most once every 60 seconds
   };
 }
-
-// export async function getServerSideProps() {
-//   const posts = await getPosts();
-//   const featuredPost = await getFeaturedPost(); // NEW and now working 🎯
-
-//   return {
-//     props: {
-//       posts,
-//       featuredPost,
-//     },
-//   };
-// }

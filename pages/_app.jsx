@@ -1,23 +1,10 @@
-// import React from 'react';
-
-// import '../styles/globals.scss';
-// import { Layout } from '../components';
-
-// function MyApp({ Component, pageProps }) {
-//   return (
-//     <Layout>
-//       <Component {...pageProps} />
-//     </Layout>
-//   );
-// }
-
-// export default MyApp;
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import '../styles/globals.scss';
 import { Layout } from '../components'; // Keep your existing import
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const GA_MEASUREMENT_ID = 'G-LFQSG3WBS8'; // Your GA ID here
 
@@ -57,7 +44,9 @@ function MyApp({ Component, pageProps }) {
         }}
       />
       <Layout>
+        <SpeedInsights />
         <Component {...pageProps} />
+        <Analytics />
       </Layout>
     </>
   );

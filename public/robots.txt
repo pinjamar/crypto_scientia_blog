@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://crypto-scientia-blog.vercel.app
+
+# Sitemaps
+Sitemap: https://crypto-scientia-blog.vercel.app/sitemap.xml
