@@ -15,6 +15,7 @@ class MyDocument extends Document {
             name="viewport"
             content="width=device-width,minimum-scale=1, initial-scale=1"
           />
+          <link rel="icon" href="/favicon.png" />
         </Head>
         <body>
           <Main />
