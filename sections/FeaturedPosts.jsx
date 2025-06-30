@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+//import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 import { FeaturedPostCard } from '../components';
-import { getFeaturedPosts } from '../services';
+//import { getFeaturedPosts } from '../services';
 
 const responsive = {
   superLargeDesktop: {
@@ -24,17 +24,18 @@ const responsive = {
   },
 };
 
-const FeaturedPosts = () => {
-  const [featuredPosts, setFeaturedPosts] = useState([]);
-  const [dataLoaded, setDataLoaded] = useState(false);
+// const FeaturedPosts = () => {
+//   const [featuredPosts, setFeaturedPosts] = useState([]);
+//   const [dataLoaded, setDataLoaded] = useState(false);
 
-  useEffect(() => {
-    getFeaturedPosts().then((result) => {
-      setFeaturedPosts(result);
-      setDataLoaded(true);
-    });
-  }, []);
+//   useEffect(() => {
+//     getFeaturedPosts().then((result) => {
+//       setFeaturedPosts(result);
+//       setDataLoaded(true);
+//     });
+//   }, []);
 
+const FeaturedPosts = ({ featuredPost }) => {
   const customLeftArrow = (
     <div className="absolute arrow-btn left-0 text-center py-3 cursor-pointer bg-pink-600 rounded-full">
       <svg
@@ -82,10 +83,13 @@ const FeaturedPosts = () => {
         responsive={responsive}
         itemClass="px-4"
       >
-        {dataLoaded &&
+        {/* {dataLoaded &&
           featuredPosts.map((post, index) => (
             <FeaturedPostCard key={index} post={post} />
-          ))}
+          ))} */}
+        {featuredPost.map((post, index) => (
+          <FeaturedPostCard key={index} post={post} />
+        ))}
       </Carousel>
     </div>
   );
