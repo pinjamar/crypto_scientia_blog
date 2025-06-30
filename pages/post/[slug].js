@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import {
@@ -17,8 +17,39 @@ const PostDetails = ({ post }) => {
   if (router.isFallback) {
     return <Loader />;
   }
+
+  const siteUrl = 'https://crypto-scientia-blog.vercel.app';
+  const postUrl = `${siteUrl}/post/${post.slug}`;
+  const ogImage = post.ogImage?.url || '/default-og.png';
   return (
     <>
+      <Head>
+        <title>{post.seoTitle || post.title}</title>
+        <meta
+          name="description"
+          content={post.seoDescription || post.excerpt || ''}
+        />
+        {post.keywords && <meta name="keywords" content={post.keywords} />}
+
+        {/* Open Graph */}
+        <meta property="og:title" content={post.seoTitle || post.title} />
+        <meta
+          property="og:description"
+          content={post.seoDescription || post.excerpt || ''}
+        />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={postUrl} />
+        <meta property="og:image" content={ogImage} />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.seoTitle || post.title} />
+        <meta
+          name="twitter:description"
+          content={post.seoDescription || post.excerpt || ''}
+        />
+        <meta name="twitter:image" content={ogImage} />
+      </Head>
       <div className="container mx-auto px-2 md:px-10 mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="col-span-1 lg:col-span-8">

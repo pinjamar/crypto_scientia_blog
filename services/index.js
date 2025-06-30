@@ -77,6 +77,12 @@ export const getPostDetails = async (slug) => {
           name
           slug
         }
+        seoTitle
+        seoDescription
+        keywords
+        ogImage {
+          url
+        }
       }
     }
   `;
@@ -150,7 +156,7 @@ export const getCategoryPost = async (slug) => {
 export const getFeaturedPosts = async () => {
   const query = gql`
     query GetCategoryPost() {
-      posts(where: {featuredPost: true}) {
+      posts(where: { featuredPost: true }, first: 3, orderBy: createdAt_DESC) {
         author {
           name
           photo {
@@ -174,7 +180,7 @@ export const getFeaturedPosts = async () => {
 
 export const getFeaturedPost = async () => {
   const featuredPosts = await getFeaturedPosts();
-  return featuredPosts?.slice(0, 3) || [];
+  return featuredPosts || [];
 };
 
 export const getRecentPosts = async () => {
