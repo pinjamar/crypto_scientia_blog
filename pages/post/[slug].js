@@ -49,6 +49,36 @@ const PostDetails = ({ post }) => {
           content={post.seoDescription || post.excerpt || ''}
         />
         <meta name="twitter:image" content={ogImage} />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://crypto-scientia-blog.vercel.app/post/${post.slug}`,
+              },
+              headline: post.seoTitle || post.title,
+              description: post.seoDescription || post.excerpt,
+              image: post.ogImage?.url || post.featuredImage?.url,
+              author: {
+                '@type': 'Person',
+                name: post.author.name,
+              },
+              publisher: {
+                '@type': 'Organization',
+                name: 'PythiaCrypto',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://crypto-scientia-blog.vercel.app/pythian.png',
+                },
+              },
+              datePublished: post.createdAt,
+            }),
+          }}
+        />
       </Head>
       <div className="container mx-auto px-2 md:px-10 mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
