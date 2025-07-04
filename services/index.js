@@ -156,9 +156,8 @@ export const getCategoryPost = async (slug) => {
 export const getFeaturedPosts = async () => {
   const query = gql`
     query GetCategoryPost() {
-      posts(where: { featuredPost: true }         
+      posts(where: { featuredPost: true },         
         orderBy: createdAt_DESC
-        first: 3
         ) {
         author {
           name
@@ -190,7 +189,7 @@ export const getRecentPosts = async () => {
   const query = gql`
     query GetPostDetails() {
       posts(
-        orderBy: createdAt_ASC
+        orderBy: createdAt_ASC,
         last: 3
       ) {
         title
@@ -204,5 +203,40 @@ export const getRecentPosts = async () => {
   `;
   const result = await request(graphqlAPI, query);
 
+  return result.posts;
+};
+
+export const searchPosts = async (searchTerm) => {
+  const query = gql`
+    query SearchPosts($search: String!) {
+      posts(
+        where: {
+          OR: [{ title_contains: $search }, { excerpt_contains: $search }]
+        }
+        orderBy: createdAt_DESC
+        first: 5
+      ) {
+        title
+        slug
+        excerpt
+        featuredImage {
+          url
+        }
+        createdAt
+        categories {
+          name
+          slug
+        }
+        author {
+          name
+          photo {
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  const result = await request(graphqlAPI, query, { search: searchTerm });
   return result.posts;
 };

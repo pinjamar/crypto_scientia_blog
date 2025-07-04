@@ -1,11 +1,25 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import { PostCard, Categories, PostWidget } from '../components';
 import { getPosts, getFeaturedPost } from '../services';
 import { FeaturedPosts } from '../sections';
 
+import { useRouter } from 'next/router';
+
 export default function Home({ posts, featuredPost }) {
   const siteUrl = 'https://crypto-scientia-blog.vercel.app';
   const ogImage = `${siteUrl}/default-og.png`; // update path if needed
+
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim().length > 1) {
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
@@ -66,10 +80,19 @@ export default function Home({ posts, featuredPost }) {
         />
       </Head>
       <FeaturedPosts featuredPost={featuredPost} />
+      <form onSubmit={handleSearchSubmit} className="mb-6 flex justify-center">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="🔍 Search blog posts..."
+          className="w-full max-w-lg p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </form>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 col-span-1">
-          {posts.map((post) => (
-            <PostCard post={post.node} key={post.title} />
+          {posts.slice(0, 3).map(({ node }) => (
+            <PostCard post={node} key={node.title} />
           ))}
         </div>
         <div className="lg:col-span-4 col-span-1">
