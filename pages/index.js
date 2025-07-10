@@ -28,7 +28,7 @@ export default function Home({ posts, featuredPost }) {
           content="Od61C-SPe_RJOnPqGlVF9jWLDGlXSWApB71vqB3IahQ"
         />
         <link rel="canonical" href="https://crypto-scientia-blog.vercel.app/" />
-        <title>PythiaCrypto — Web3 & Crypto Blog</title>
+        <title>PythiaCrypto Web3 & DeFi</title>
         <meta
           name="description"
           content="Explore blockchain insights, DeFi tutorials, crypto guides, and Web3 development with PythiaCrypto — the blog for decentralized thinkers."
