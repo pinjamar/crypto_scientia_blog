@@ -9,14 +9,18 @@ import { graphCMSImageLoader } from '../util';
 
 const PostCard = ({ post }) => (
   <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 post-card">
-    <div className="relative overflow-hidden shadow-md pb-80 mb-6">
-      <img
-        src={post.featuredImage.url}
-        alt={post.title}
-        className="absolute h-80 w-full object-cover shadow-lg rounded-lg lg:rounded-lg"
-      />
+    <div className="relative overflow-hidden shadow-md mb-6 rounded-lg">
+      <div className="relative w-full aspect-[4/3] sm:aspect-[16/9]">
+        <Image
+          src={`${post.featuredImage.url}?width=800&fit=clip`}
+          alt={post.title}
+          fill
+          className="rounded-lg object-cover"
+          sizes="(max-width: 768px) 100vw, 50vw"
+          loading="lazy"
+        />
+      </div>
     </div>
-
     <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-pink-600 text-3xl font-semibold">
       <Link href={`/post/${post.slug}`}>{post.title}</Link>
     </h1>

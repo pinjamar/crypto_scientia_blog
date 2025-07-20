@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-
+import Image from 'next/image';
 import moment from 'moment';
 
 const PostDetail = ({ post }) => {
@@ -49,13 +49,14 @@ const PostDetail = ({ post }) => {
         );
       case 'image':
         return (
-          <img
-            key={index}
-            alt={obj.title}
-            height={obj.height}
-            width={obj.width}
-            src={obj.src}
-          />
+          <div key={index} className="w-full my-6 flex justify-center">
+            <img
+              alt={obj.title}
+              src={`${obj.src}?width=1000&height=600&fit=clip`}
+              className="rounded-lg w-full max-w-[1000px] h-[200px] sm:h-[300px] md:h-[400px] object-cover shadow-md"
+              loading="lazy"
+            />
+          </div>
         );
       default:
         return modifiedText;
@@ -65,17 +66,16 @@ const PostDetail = ({ post }) => {
   return (
     <>
       <div className="bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8 px-0">
-        <div className="relative overflow-hidden shadow-md mb-6">
-          <img
-            src={post.featuredImage.url}
-            alt={post.title}
-            width={1200}
-            height={600}
-            // className="object-center h-full w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
-            className="rounded-md object-cover w-full max-h-[500px]"
-            // eslint-disable-next-line react/no-unknown-property
-            priority
-          />
+        <div className="relative overflow-hidden shadow-md mb-6 flex justify-center">
+          <div className="relative w-full max-w-[1200px] aspect-[4/3] sm:aspect-[16/9]">
+            <Image
+              src={`${post.featuredImage.url}?width=1200&fit=clip`}
+              alt={post.title}
+              fill
+              className="rounded-md object-cover"
+              priority
+            />
+          </div>
         </div>
         <div className="px-4 lg:px-0">
           <div className="flex items-center mb-8 w-full justify-center">
