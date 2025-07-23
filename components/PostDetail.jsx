@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
@@ -8,61 +9,145 @@ const PostDetail = ({ post }) => {
   const getContentFragment = (index, text, obj, type) => {
     let modifiedText = text;
 
-    if (obj) {
-      if (obj.bold) {
-        modifiedText = <b key={index}>{text}</b>;
-      }
-
-      if (obj.italic) {
-        modifiedText = <em key={index}>{text}</em>;
-      }
-
-      if (obj.underline) {
-        modifiedText = <u key={index}>{text}</u>;
-      }
+    if (obj && obj.children) {
+      modifiedText = obj.children.map((child, i) =>
+        getContentFragment(i, child.text || '', child, child.type)
+      );
     }
-
+    if (obj) {
+      if (obj.bold) modifiedText = <b>{modifiedText}</b>;
+      if (obj.italic) modifiedText = <em>{modifiedText}</em>;
+      if (obj.underline) modifiedText = <u>{modifiedText}</u>;
+    }
     switch (type) {
+      // Headings
+      case 'heading-one':
+        return (
+          <h1 key={index} className="text-4xl font-bold mb-6">
+            {modifiedText}
+          </h1>
+        );
+      case 'heading-two':
+        return (
+          <h2 key={index} className="text-3xl font-bold mb-5">
+            {modifiedText}
+          </h2>
+        );
       case 'heading-three':
         return (
-          <h3 key={index} className="text-xl font-semibold mb-4">
-            {modifiedText.map((item, i) => (
-              <React.Fragment key={i}>{item}</React.Fragment>
-            ))}
+          <h3 key={index} className="text-2xl font-semibold mb-4">
+            {modifiedText}
           </h3>
-        );
-      case 'paragraph':
-        return (
-          <p key={index} className="mb-8">
-            {modifiedText.map((item, i) => (
-              <React.Fragment key={i}>{item}</React.Fragment>
-            ))}
-          </p>
         );
       case 'heading-four':
         return (
-          <h4 key={index} className="text-md font-semibold mb-4">
-            {modifiedText.map((item, i) => (
-              <React.Fragment key={i}>{item}</React.Fragment>
-            ))}
+          <h4 key={index} className="text-xl font-semibold mb-3">
+            {modifiedText}
           </h4>
         );
+      case 'heading-five':
+        return (
+          <h5 key={index} className="text-lg font-semibold mb-2">
+            {modifiedText}
+          </h5>
+        );
+      case 'heading-six':
+        return (
+          <h6 key={index} className="text-base font-semibold mb-2">
+            {modifiedText}
+          </h6>
+        );
+      // Paragraph
+      case 'paragraph':
+        return (
+          <p key={index} className="mb-6">
+            {modifiedText}
+          </p>
+        );
+      // Lists
+      case 'bulleted-list':
+        return (
+          <ul key={index} className="list-disc list-inside pl-6 mb-6">
+            {modifiedText}
+          </ul>
+        );
+      case 'numbered-list':
+        return (
+          <ol key={index} className="list-decimal list-inside pl-6 mb-6">
+            {modifiedText}
+          </ol>
+        );
+      // Handle nested list structure
+      case 'list-item':
+      case 'list-item-child':
+        // Render only leaf-level list-item-child as <li>
+        const isLeaf = !obj.children?.some(
+          (child) =>
+            child.type === 'list-item' || child.type === 'list-item-child'
+        );
+        return isLeaf ? (
+          <li key={index} className="mb-2">
+            {modifiedText}
+          </li>
+        ) : (
+          <React.Fragment key={index}>{modifiedText}</React.Fragment>
+        );
+      // Table
+      case 'table':
+        return (
+          <table
+            key={index}
+            className="table-auto border border-gray-300 w-full mb-6"
+          >
+            <tbody>{modifiedText}</tbody>
+          </table>
+        );
+      case 'table_row':
+        return <tr key={index}>{modifiedText}</tr>;
+      case 'table_cell':
+        return (
+          <td key={index} className="border px-4 py-2">
+            {modifiedText}
+          </td>
+        );
+      case 'table_header_cell':
+        return (
+          <th
+            key={index}
+            className="border px-4 py-2 font-semibold text-left bg-gray-100"
+          >
+            {modifiedText}
+          </th>
+        );
+      // Links
+      case 'link':
+        return (
+          <a
+            key={index}
+            href={obj.href}
+            target={obj.openInNewTab ? '_blank' : '_self'}
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            {modifiedText}
+          </a>
+        );
+      // Images
       case 'image':
         return (
           <div key={index} className="w-full my-6 flex justify-center">
             <img
-              alt={obj.title}
-              src={`${obj.src}?width=1000&height=600&fit=clip`}
-              className="rounded-lg w-full max-w-[1000px] h-[200px] sm:h-[300px] md:h-[400px] object-cover shadow-md"
+              src={obj.src}
+              alt={obj.title || ''}
+              className="rounded-lg max-w-full h-auto object-contain shadow"
               loading="lazy"
             />
           </div>
         );
       default:
-        return modifiedText;
+        return <React.Fragment key={index}>{modifiedText}</React.Fragment>;
     }
   };
-
   return (
     <>
       <div className="bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8 px-0">
@@ -114,12 +199,9 @@ const PostDetail = ({ post }) => {
           <h1 className="mb-8 md:text-4xl font-bold flex justify-center">
             {post.title}
           </h1>
-          {post.content.raw.children.map((typeObj, index) => {
-            // prettier-ignore
-            const children = typeObj.children.map((item, itemindex) =>
-              getContentFragment(itemindex, item.text, item));
-            return getContentFragment(index, children, typeObj, typeObj.type);
-          })}
+          {post.content.raw.children.map((node, index) =>
+            getContentFragment(index, '', node, node.type)
+          )}
         </div>
       </div>
     </>
