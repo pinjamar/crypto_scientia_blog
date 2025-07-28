@@ -91,9 +91,12 @@ export default function Home({ posts, featuredPost }) {
       </form>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-8 col-span-1">
-          {posts.slice(0, 3).map(({ node }) => (
-            <PostCard post={node} key={node.title} />
-          ))}
+          {posts
+            .slice(-4)
+            .reverse()
+            .map(({ node }) => (
+              <PostCard post={node} key={node.title} />
+            ))}
         </div>
         <div className="lg:col-span-4 col-span-1">
           <div className="lg:sticky relative top-8">
