@@ -95,12 +95,14 @@ const PostDetail = ({ post }) => {
       // Table
       case 'table':
         return (
-          <table
-            key={index}
-            className="table-auto border border-gray-300 w-full mb-6"
-          >
-            <tbody>{modifiedText}</tbody>
-          </table>
+          <div className="overflow-x-auto w-full">
+            <table
+              key={index}
+              className="table-auto border border-gray-300 w-full mb-6 min-w-[700px]"
+            >
+              <tbody>{modifiedText}</tbody>
+            </table>
+          </div>
         );
       case 'table_row':
         return <tr key={index}>{modifiedText}</tr>;
